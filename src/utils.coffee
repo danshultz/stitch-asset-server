@@ -8,3 +8,9 @@ exports.flatten = flatten = (array, results = []) ->
 
 exports.toArray = (value = []) ->
   if Array.isArray(value) then value else [value]
+
+exports.stripExt = (filePath) ->
+  if (lastDotIndex = filePath.lastIndexOf '.') >= 0
+    filePath[0...lastDotIndex]
+  else
+    filePath
