@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  background-color: red;
+}
+.class { color: blue; }
+.h2 {
+  font-size: large;
+  foo: red;
+}
+h3 { color: goldenrod; display: none; }
+.face { 
+  foo: stuff;
+  lots: of-css;
+}
