@@ -1,9 +1,10 @@
 {resolve} = require('path')
 compilers = require('./compilers')
+{toArray}    = require('./utils')
 
 class CssBundler
   constructor: (files) ->
-    @files = files.map(resolve).map(require.resolve)
+    @files = toArray(files).map(resolve).map(require.resolve)
 
   compile: ->
     @files.map(require).join('')
