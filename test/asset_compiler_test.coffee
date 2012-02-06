@@ -33,9 +33,19 @@ describe "AssetCompiler", ->
     compiler.compile_and_create_manifest(build_dir)
 
     manifest_path = path.join(build_dir, 'manifest.mf')
-    manifest = fs.readFileSync(manifest_path).toString()
-    manifest.should.equal util.format
+    manifest = JSON.parse(fs.readFileSync(manifest_path).toString())
+    manifest.should.eql
       'application.js': 'application-a5e62a3110f5acfa98259ce87c2aaf4b.js'
       'application.css': 'application-e0185cba9a838c87a1ba16e9c5cad5de.css'
       'other.css': 'other-7ab6eb3ade352f818cfb17afcb39422d.css'
+
+    appjs = fs.readFileSync(path.join(build_dir, manifest['application.js']))
+    appjs.should.eql fs.readFileSync(resolve('test/fixtures/package/expected_result.js'))
+
+    appcss = fs.readFileSync(path.join(build_dir, manifest['application.css']))
+    appcss.should.eql fs.readFileSync(resolve('test/fixtures/css_bundler/expanded.css'))
+    
+    othercss = fs.readFileSync(path.join(build_dir, manifest['other.css']))
+    othercss.should.eql fs.readFileSync(resolve('test/fixtures/css_bundler/c.css'))
+
 

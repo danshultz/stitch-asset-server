@@ -18,19 +18,23 @@ class AssetCompiler
 
     @compile_javascript(save_dir, manifest)
     @compile_css(save_dir, manifest)
-    fs.writeFileSync(path.join(save_dir, manifest_name), util.format(manifest))
+    fs.writeFileSync(path.join(save_dir, manifest_name), util.format('%j', manifest))
+
+  #private
 
   compile_javascript: (save_dir, manifest) ->
     for file_name, data of @packages.js
       file_data = new Package(data).compile()
-      fs.writeFileSync(path.join(save_dir, file_name), file_data)
-      manifest[file_name] = md5Namer(file_name, file_data)
+      hashed_file_name = md5Namer(file_name, file_data)
+      fs.writeFileSync(path.join(save_dir, hashed_file_name), file_data)
+      manifest[file_name] = hashed_file_name
 
   compile_css: (save_dir, manifest) ->
     for file_name, data of @packages.css
       file_data = new CssBundler(data).compile()
-      fs.writeFileSync(path.join(save_dir, file_name), file_data)
-      manifest[file_name] = md5Namer(file_name, file_data)
+      hashed_file_name = md5Namer(file_name, file_data)
+      fs.writeFileSync(path.join(save_dir, hashed_file_name), file_data)
+      manifest[file_name] = hashed_file_name
 
 
 module.exports = AssetCompiler
