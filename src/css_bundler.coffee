@@ -7,14 +7,17 @@ class CssBundler
     @files = toArray(files).map(resolve).map(require.resolve)
 
   compile: ->
-    @files.map(require).join('')
-  
+    @files.map(@rerequire).join('')
+
   createServer: ->
-    console.log('building server')
     (req, res, next) =>
       content = @compile()
       res.writeHead(200, 'Content-Type': 'text/css')
       res.end(content)
+
+  rerequire: (file) ->
+    delete require.cache[file]
+    require(file)
       
 module.exports =
   CssBundler: CssBundler
