@@ -33,6 +33,26 @@ describe "Options", ->
             dependencies: default_options.dependencies
         css:
           '/application.css': default_options.css
+      
+    it "builds with complex options", ->
+      options = new Options(complex_options)
+      options.build_compiler_package().should.eql
+        js:
+          '/application.js':
+            paths: ['./app', './stuff']
+            libs: ['./lib/lib.js']
+            dependencies: 'gfx'
+          '/jquery.js':
+            paths: ['./file']
+            libs: []
+            dependencies: []
+          '/other.js':
+            paths: ['./app', './b']
+            libs: []
+            dependencies: []
+        css:
+          '/application.css': ['a.css', 'b.css']
+          '/other.css': 'somefile.css'
 
 
 
@@ -82,5 +102,17 @@ describe "Options", ->
     testPath:     '/test2'
     specs:        './test/specs2'
     specsPath:    '/test/specs2.js'
+
+  complex_options =
+    cssPath:
+      '/application.css': ['a.css', 'b.css']
+      '/other.css': 'somefile.css'
+    jsPath:
+      '/application.js':
+        paths: ['./app', './stuff']
+        libs: ['./lib/lib.js']
+        dependencies: 'gfx'
+      '/jquery.js': './file'
+      '/other.js': ['./app', './b']
 
 

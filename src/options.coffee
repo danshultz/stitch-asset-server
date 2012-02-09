@@ -29,11 +29,33 @@ class Options
 
   build_compiler_package: ->
     obj = { js:{}, css:{} }
-    obj.js[this.jsPath] =
-      paths: this.paths
-      libs: this.libs
-      dependencies: this.dependencies
-    obj.css[this.cssPath] = this.css
+    if typeof @jsPath is 'string'
+      obj.js[this.jsPath] =
+        paths: this.paths
+        libs: this.libs
+        dependencies: this.dependencies
+    else
+      for key, value of @jsPath
+        if typeof value is 'string'
+          value =
+            paths: [value]
+            libs: []
+            dependencies: []
+        else if value instanceof Array
+          value =
+            paths: value
+            libs: []
+            dependencies: []
+          
+        obj.js[key] = value
+        
+
+    if typeof @cssPath is 'string'
+      obj.css[this.cssPath] = this.css
+    else
+      for key, value of @cssPath
+        obj.css[key] = value
+
     return obj
 
 
