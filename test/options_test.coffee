@@ -22,6 +22,20 @@ describe "Options", ->
     options[key].should.eql(value) for key, value of slug_file_data
     options.slug.should.eql slug_path
 
+  describe "#build_compiler_package", ->
+    it "builds with basic options", ->
+      options = new Options(default_options)
+      options.build_compiler_package().should.eql
+        js:
+          '/application.js':
+            paths: default_options.paths
+            libs: default_options.libs
+            dependencies: default_options.dependencies
+        css:
+          '/application.css': default_options.css
+
+
+
   default_options =
     slug:         './slug.json'
     css:          './css'

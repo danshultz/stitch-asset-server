@@ -27,4 +27,14 @@ class Options
   specs:        './test/specs'
   specsPath:    '/test/specs.js'
 
+  build_compiler_package: ->
+    obj = { js:{}, css:{} }
+    obj.js[this.jsPath] =
+      paths: this.paths
+      libs: this.libs
+      dependencies: this.dependencies
+    obj.css[this.cssPath] = this.css
+    return obj
+
+
 module.exports = Options
