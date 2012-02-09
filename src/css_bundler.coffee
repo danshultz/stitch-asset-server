@@ -15,9 +15,13 @@ class CssBundler
       res.writeHead(200, 'Content-Type': 'text/css')
       res.end(content)
 
+  headers:
+    'Content-Type': 'text/css'
+
   rerequire: (file) ->
     delete require.cache[file]
     require(file)
+
       
 module.exports =
   CssBundler: CssBundler
