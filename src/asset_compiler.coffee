@@ -3,7 +3,7 @@ path = require 'path'
 util = require 'util'
 resolve = path.resolve
 {CssBundler} = require './css_bundler.coffee'
-{Package} = require './package'
+{Package} = require './js_packager'
 {md5Namer} = require './file_namer'
 
 class AssetCompiler

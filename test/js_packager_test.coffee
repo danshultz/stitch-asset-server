@@ -1,6 +1,6 @@
 {resolve} = require('path')
 fs = require('fs')
-{Package} = require resolve('./src/package')
+{Package} = require resolve('./src/js_packager')
 
 describe "Package", ->
 
