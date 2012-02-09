@@ -19,12 +19,3 @@ describe "Package", ->
     expected = fs.readFileSync(resolve('./test/fixtures/package/expected_result.min.js'), 'utf8')
     package.compile(true).should.equal(expected.trim())
 
-  it "should create a server", (done) ->
-    request = package.createServer()
-    request(null, (status, header, body) ->
-      status.should.equal(200)
-      header['Content-Type'].should.equal('text/javascript')
-      expected = fs.readFileSync(resolve('./test/fixtures/package/expected_result.js'), 'utf8')
-      body.should.equal(expected)
-      done()
-    )

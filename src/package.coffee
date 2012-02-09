@@ -28,9 +28,9 @@ class Package
     result = uglify(result) if minify
     result
     
-  createServer: (minify) ->
-    (env, callback) =>
-      callback(200, { 'Content-Type': 'text/javascript' }, @compile(minify))
+  headers:
+    'Content-Type': 'text/javascript'
+
 
 module.exports =
   compilers:  compilers
