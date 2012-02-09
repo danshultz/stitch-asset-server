@@ -1,0 +1,1 @@
+exports.ExpressAdapter = require './express'
