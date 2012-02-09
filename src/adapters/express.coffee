@@ -1,3 +1,4 @@
+path = require 'path'
 express   = require('express')
 methods = require('express/lib/router/methods')
 
@@ -12,5 +13,15 @@ class ExpressAdapter
       result = callback()
       res.writeHead result.statusCode, result.headers
       res.end result.content
+
+  static: (directory) ->
+    if path.existsSync(directory)
+      @server.use(express.static(directory))
+
+  run: (port, callback) ->
+    if callback
+      @server.on('listening', callback)
+    port or= 9294
+    @server.listen(port)
 
 module.exports = ExpressAdapter
