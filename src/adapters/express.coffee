@@ -22,6 +22,7 @@ class ExpressAdapter
     if callback
       @server.on('listening', callback)
     port or= 9294
+    @server.on('listening', -> console.log("Express server started and running on port #{port}.\nAccess the server by going to http://0.0.0.0:#{port}."))
     @server.listen(port)
 
 module.exports = ExpressAdapter

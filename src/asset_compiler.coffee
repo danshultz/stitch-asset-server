@@ -2,7 +2,7 @@ fs = require 'fs'
 path = require 'path'
 util = require 'util'
 resolve = path.resolve
-{CssBundler} = require './css_bundler.coffee'
+{CssBundler} = require './css_bundler'
 {Package} = require './js_packager'
 {md5Namer} = require './file_namer'
 

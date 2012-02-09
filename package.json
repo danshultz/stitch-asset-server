@@ -6,15 +6,15 @@
   "licenses":
     [{ 
       "type": "MIT", 
-      "url": "https://github.com/maccman/hem/blob/master/LICENSE"
+      "url": "https://github.com/danshultz/stitch-asset-server/blob/master/LICENSE"
     }], 
   "repository": { 
     "type" : "git", 
     "url": "http://github.com/danshultz/stitch-asset-server.git"
   }, 
   "engine" : [ "node >=0.1.102" ], 
-  "main" : "./lib/hem.js",
-  "bin": { "hem": "./bin/hem" },
+  "main" : "./lib/asset_server.js",
+  "bin": { "asset-server": "./bin/asset-server" },
   "dependencies" : { 
     "eco": "1.1.0-rc-3",
     "uglify-js": "~1.1.1",
@@ -27,7 +27,6 @@
   "devDependencies" : {
     "mocha": "~0.11.0",
     "should": "~0.5.1",
-    "strata": "~0.8.1",
     "express": "*"
   }
 }
