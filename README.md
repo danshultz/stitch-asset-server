@@ -1,13 +1,59 @@
 #Introduction
 
-Hem is a project for compiling CommonJS modules when building JavaScript web applications. You can think of Hem as [Bundler](http://gembundler.com/) for Node, or [Stitch](https://github.com/sstephenson/stitch) on steroids. 
+Stitch Asset Server is a project for compiling, bundling and serving up your assets. The goal of this tool is to be able to use node as a javascript development tool and to provide a simple way to package up your assets and serve them from node. Additionally, this tool is designed to be a utility that is simple to use yet flexable enough to handle the most complex cases of asset packaging with ease.
 
-This is rather awesome, as it means you don't need to faff around with coping around JavaScript files. jQuery can be a npm dependency, so can jQueryUI and all your custom components. Hem will resolve dependencies dynamically, bundling them together into one file to be served up. Upon deployment, you can serialize your application to disk and serve it statically. 
+While the tool supports convention over configuration, you are able to easily configure the following:
 
-#Installation
+* included libraries
+* use/not use CommonJS
+* js temlate engines
+* css tools
+* node web server used
 
-    npm install -g hem
+Supports both Strata and Express node web servers out of the box but can easily be exteded to use other servers
 
-#Usage
+##Quick Start
 
-Please see the [Hem guide](http://spinejs.com/docs/hem) for usage instructions.
+``
+npm install -g stitch-asset-server
+asset-server create my_asset_server
+cd my_asset_server
+asset-server run
+```
+
+##Usage
+
+###Development Tool
+
+after installing, run ```asset-server run```
+
+###Precompiling Assets
+
+When you go to production, you will want to pre-compile your assets. Running ```asset-server precompile``` will pre-compile your assets and create a manifest file of the assets. By default, the assets will be precompiled with an md5 hash in their name based on the contents of the file ({original name}-{md5}.{ext}).
+
+###Asset Server
+
+####Express
+
+add the following to your server startup
+```javascript
+var app = require('express').createServer();
+
+var AssetServer = require('stitch-asset-server').AssetServer;
+var assetServer = new AssetServer()
+assetServer.include(app)
+```
+
+####Strata Server
+
+add the following to your server startup
+```javascript
+var Builder = require('strata').Builder;
+var app = new Builder();
+
+var AssetServer = require('stitch-asset-server').AssetServer;
+var assetServer = new AssetServer()
+assetServer.include(app)
+```
+
+
