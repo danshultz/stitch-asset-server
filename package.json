@@ -13,7 +13,7 @@
     "url": "http://github.com/danshultz/stitch-asset-server.git"
   }, 
   "engine" : [ "node >=0.1.102" ], 
-  "main" : "./lib/asset_server.js",
+  "main" : "./lib/index.js",
   "bin": { "asset-server": "./bin/asset-server" },
   "dependencies" : { 
     "eco": "1.1.0-rc-3",
