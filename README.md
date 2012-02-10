@@ -25,6 +25,7 @@ This tool provides the following:
 * pre-compiling assets for production with md5 digest
 
 Future support:
+
 * script tag generation for node servers
 * ability to publish assets to cdn/server
 
@@ -64,4 +65,8 @@ compiler = new AssetCompiler(asset_options.build_compiler_package())
 compiler.create_routes(adapter)
 ```
 
+
+###Thanks/Credits
+
+This was inspired by [Hem](https://github.com/maccman/hem), which was created by Alex MacCaw. Parts of the source for this project was adapted based on his project.
 
