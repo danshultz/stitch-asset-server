@@ -1,5 +1,6 @@
-fs = require('fs')
-path = require 'path'
+fs        = require 'fs'
+path      = require 'path'
+{toArray} = require './utils'
 
 class Options
   constructor: (overrides = null) ->
@@ -30,23 +31,11 @@ class Options
   build_compiler_package: ->
     obj = { js:{}, css:{} }
     if typeof @jsPath is 'string'
-      obj.js[this.jsPath] =
-        paths: this.paths
-        libs: this.libs
-        dependencies: this.dependencies
+      obj.js[this.jsPath] = @create_js_package(this.paths, this.libs, this.dependencies)
     else
       for key, value of @jsPath
-        if typeof value is 'string'
-          value =
-            paths: [value]
-            libs: []
-            dependencies: []
-        else if value instanceof Array
-          value =
-            paths: value
-            libs: []
-            dependencies: []
-          
+        if typeof value is 'string' || value instanceof Array
+          value = @create_js_package(value)
         obj.js[key] = value
         
 
@@ -57,6 +46,13 @@ class Options
         obj.css[key] = value
 
     return obj
+
+  # private
+  create_js_package: (paths, libs = [], dependencies = []) ->
+    paths: toArray(paths)
+    libs: libs
+    dependencies: dependencies
+
 
 
 module.exports = Options
