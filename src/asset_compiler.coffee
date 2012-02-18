@@ -19,6 +19,10 @@ class AssetCompiler
     manifest_name or= @packages.manifest_name or= 'manifest.mf'
     save_dir or= @packages.save_dir or= './build'
     save_dir = path.resolve(save_dir)
+
+    #TODO: support creating the recursive path if not exist
+    if !path.existsSync(save_dir)
+      fs.mkdirSync(save_dir)
     manifest = {}
 
     @compile(@packages.js, save_dir, manifest, Package)
