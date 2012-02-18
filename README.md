@@ -2,17 +2,6 @@
 
 Stitch Asset Server is a project for compiling, bundling and serving up your assets. The goal of this tool is to provide a way to use node for general javascript development and to integrate into the existing node servers. While the tool supports convention over configuration, you are able to easily configure the following:
 
-Current Supports:
-* included libraries
-* use/not use CommonJS
-
-Future Support in Process
-* node web server used
-* css tools
-* js temlate engines 
-
-Current it only supports express ~2.0.0 but will be updated to support express ~3.0.0 as well as Strata
-
 ##Why a different tool?
 
 There are some great toos out there (stitch, connect-assets, hem, etc). The problem with all these tools is that they are not flexible and not easily extendable. This tool is extendable and should be easy to use and easy to extend if you needs are complex.
@@ -30,6 +19,8 @@ Future support:
 * script tag generation for node servers
 * ability to publish assets to cdn/server
 * configurable "compilers" so you can mix and match templateing engines/css compilers as you please. A base set of compilers (as the current set) will be defined
+
+Current it only supports express ~2.0.0 but will be updated to support express ~3.0.0 as well as Strata
 
 ##Quick Start
 
