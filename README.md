@@ -26,15 +26,21 @@ This tool provides the following:
 
 Future support:
 
+* test server integration with mocha/chai via test url (/test will be default)
 * script tag generation for node servers
 * ability to publish assets to cdn/server
+* configurable "compilers" so you can mix and match templateing engines/css compilers as you please. A base set of compilers (as the current set) will be defined
 
 ##Quick Start
 
 ``
 npm install -g stitch-asset-server
-asset-server
+asset-server server
 ```
+
+##Sample Configuration file
+
+A sample of what the configs and options look like can be [found here](https://github.com/danshultz/stitch-asset-server/blob/master/test/options_test.coffee)
 
 ##Usage
 
