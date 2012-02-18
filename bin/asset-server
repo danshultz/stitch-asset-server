@@ -1,3 +1,24 @@
 #!/usr/bin/env node
+var optimist  = require('optimist')
     
-require('../lib/asset_server').create();
+var argv = optimist.usage([
+  '  usage: asset-server COMMAND',
+  '    server  start a dynamic development server',
+  '    build   serialize application to disk'
+].join("\n"))
+.alias('p', 'port')
+.alias('d', 'debug')
+.argv
+
+switch(argv._[0]) {
+  case "server":
+    require('../lib/asset_server').create({ port: argv.port });
+    break;
+  case "build":
+    require('../lib/asset_server').compile(argv.dir, argv.manifest);
+    console.log('building assets complete');
+    break;
+  default:
+    optimist.showHelp()
+    process.exit()
+}
