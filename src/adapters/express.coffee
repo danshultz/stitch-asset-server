@@ -5,14 +5,14 @@ methods = require('express/lib/router/methods')
 class ExpressAdapter
   constructor: (@server = express.createServer()) ->
 
-  route: (verb, route, callback) ->
+  route: (verb, route, package) ->
     if !methods.some((method) -> method == verb)
       throw new Error("ArgumentError: verb #{verb} is not supported")
 
-    result = callback()
     @server[verb] route, (req, res, next) =>
-      res.writeHead result.statusCode, result.headers
-      res.end result.content
+      content = package.compile()
+      res.writeHead 200, package.headers
+      res.end content
 
   static: (directory) ->
     if path.existsSync(directory)

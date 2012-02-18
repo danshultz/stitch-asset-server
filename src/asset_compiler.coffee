@@ -30,13 +30,8 @@ class AssetCompiler
   create_route_for: (package_data, adapter, packager) ->
     for file_name, data of package_data
       do (file_name, data) ->
-        callback = =>
-          package = new packager(data)
-          statusCode: 200
-          headers: package.headers
-          content: package.compile()
-          
-        adapter.route('get', file_name, callback)
+        package = new packager(data)
+        adapter.route('get', file_name, package)
 
 
   compile: (package_data, save_dir, manifest, packager) ->

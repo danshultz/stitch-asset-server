@@ -66,15 +66,15 @@ describe "AssetCompiler", ->
           it "should create route for #{asset_name}", ->
             results = {}
             adapter =
-              route: (verb, route, callback) ->
-                results[route] = { verb: verb, callback: callback }
+              route: (verb, route, package) ->
+                results[route] = { verb: verb, package: package }
 
             compiler.create_routes(adapter)
             result = results[asset_name]
             should.exist(result, "expected route #{asset_name} to exist")
             result.verb.should.equal('get')
-            data = result.callback()
-            data.statusCode.should.equal 200
-            data.headers.should.eql expected_package_headers[asset_name]
-            data.content.should.eql expected_package_result[asset_name].toString()
+            package = result.package
+
+            package.headers.should.eql expected_package_headers[asset_name]
+            package.compile().should.eql expected_package_result[asset_name].toString()
 
