@@ -12,6 +12,7 @@ This tool provides the following:
 * ability to serve multiple css/js packages based on configuration
 * inline code configuration or static config file
 * pre-compiling assets for production with md5 digest
+* in browser testing support for your application (http://0.0.0.0:9294/test) utilizing mocha/chai
 
 Future support:
 
@@ -24,10 +25,7 @@ Current it only supports express ~2.0.0 but will be updated to support express ~
 
 ##Quick Start
 
-``
-npm install -g stitch-asset-server
-asset-server server
-```
+Coming soon!
 
 ##Sample Configuration file
 
