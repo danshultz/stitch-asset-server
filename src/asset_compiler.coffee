@@ -20,6 +20,7 @@ class AssetCompiler
     options.save_dir or= @packages.save_dir or= './build'
     options.save_dir = path.resolve(options.save_dir)
     options.hash_file_names = if (options.hash_file_names == undefined) then true else options.hash_file_names
+    options.minify = if (options.minify == undefined) then true else options.minify
 
     #TODO: support creating the recursive path if not exist
     if !path.existsSync(options.save_dir)
@@ -42,7 +43,7 @@ class AssetCompiler
   _compile: (package_data, manifest, packager, options) ->
     for file_name, data of package_data
       file_name = path.basename(file_name)
-      file_data = new packager(data).compile()
+      file_data = new packager(data).compile(options.minify)
       hashed_file_name = if options.hash_file_names then md5Namer(file_name, file_data) else file_name
       fs.writeFileSync(path.join(options.save_dir, hashed_file_name), file_data)
       manifest[file_name] = hashed_file_name

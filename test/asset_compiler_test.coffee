@@ -45,12 +45,12 @@ describe "AssetCompiler", ->
       manifest_path = path.join(build_dir, 'manifest.mf')
       manifest = JSON.parse(fs.readFileSync(manifest_path).toString())
       manifest.should.eql
-        'application.js': 'application-a5e62a3110f5acfa98259ce87c2aaf4b.js'
+        'application.js': 'application-4b4d7fa6613776a909eb1d71cd58673e.js'
         'application.css': 'application-e0185cba9a838c87a1ba16e9c5cad5de.css'
         'other.css': 'other-7ab6eb3ade352f818cfb17afcb39422d.css'
 
       appjs = fs.readFileSync(path.join(build_dir, manifest['application.js']))
-      appjs.should.eql fs.readFileSync(resolve('test/fixtures/package/expected_result.js'))
+      appjs.should.eql fs.readFileSync(resolve('test/fixtures/package/expected_result.min.js'))
 
       appcss = fs.readFileSync(path.join(build_dir, manifest['application.css']))
       appcss.should.eql fs.readFileSync(resolve('test/fixtures/css_bundler/expanded.css'))
@@ -60,7 +60,7 @@ describe "AssetCompiler", ->
 
     describe "passing options to not hash file name", ->
       it "should not hash the output files", ->
-        compiler.compile(save_dir: build_dir, hash_file_names: false)
+        compiler.compile(save_dir: build_dir, hash_file_names: false, minify: false)
 
         manifest_path = path.join(build_dir, 'manifest.mf')
         manifest = JSON.parse(fs.readFileSync(manifest_path).toString())
