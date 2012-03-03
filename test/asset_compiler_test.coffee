@@ -32,7 +32,7 @@ describe "AssetCompiler", ->
   compiler = null
   before -> compiler = new AssetCompiler(package)
 
-  describe "#compile_and_create_manifest", ->
+  describe "#compile", ->
     build_dir = './test/build'
     fs.mkdir('./test/build')
     before ->
@@ -40,7 +40,7 @@ describe "AssetCompiler", ->
         fs.unlinkSync(path.join(build_dir, file))
     
     it "should compile and create manifest", ->
-      compiler.compile_and_create_manifest(build_dir)
+      compiler.compile(save_dir: build_dir)
 
       manifest_path = path.join(build_dir, 'manifest.mf')
       manifest = JSON.parse(fs.readFileSync(manifest_path).toString())
@@ -57,6 +57,26 @@ describe "AssetCompiler", ->
       
       othercss = fs.readFileSync(path.join(build_dir, manifest['other.css']))
       othercss.should.eql fs.readFileSync(resolve('test/fixtures/css_bundler/c.css'))
+
+    describe "passing options to not hash file name", ->
+      it "should not hash the output files", ->
+        compiler.compile(save_dir: build_dir, hash_file_names: false)
+
+        manifest_path = path.join(build_dir, 'manifest.mf')
+        manifest = JSON.parse(fs.readFileSync(manifest_path).toString())
+        manifest.should.eql
+          'application.js': 'application.js'
+          'application.css': 'application.css'
+          'other.css': 'other.css'
+
+        appjs = fs.readFileSync(path.join(build_dir, manifest['application.js']))
+        appjs.should.eql fs.readFileSync(resolve('test/fixtures/package/expected_result.js'))
+
+        appcss = fs.readFileSync(path.join(build_dir, manifest['application.css']))
+        appcss.should.eql fs.readFileSync(resolve('test/fixtures/css_bundler/expanded.css'))
+        
+        othercss = fs.readFileSync(path.join(build_dir, manifest['other.css']))
+        othercss.should.eql fs.readFileSync(resolve('test/fixtures/css_bundler/c.css'))
 
   describe "#create_routes", ->
     for asset_type, asset_package of package
