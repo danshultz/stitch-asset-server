@@ -23,6 +23,7 @@ class Options
   jsPath:       '/application.js'
 
   test:         './test'
+  testPageTemplate: ''
   testPublic:   './test/public'
   testPath:     '/test'
   specs:        './test/specs'

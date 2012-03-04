@@ -16,7 +16,7 @@ class TestServer
   _create_test_routes: (adapter) ->
     package = new Package(paths: @options.specs, identifier: 'specs', dependencies: 'jqueryify')
     adapter.route('get', @options.specsPath, package)
-    test_page = require('../assets/test_page')
+    test_page = if @options.testPageTemplate then require(path.resolve(@options.testPageTemplate)) else require('../assets/test_page')
     adapter.route 'get', '/test',
       headers: { 'Content-Type': 'text/html' }
       compile: -> test_page()

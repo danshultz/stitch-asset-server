@@ -67,6 +67,7 @@ describe "Options", ->
     cssPath:      '/application.css'
     jsPath:       '/application.js'
     test:         './test'
+    testPageTemplate: ''
     testPublic:   './test/public'
     testPath:     '/test'
     specs:        './test/specs'
