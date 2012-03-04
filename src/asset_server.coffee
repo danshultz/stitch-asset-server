@@ -17,7 +17,7 @@ class AssetServer
   create: (callback) ->
     adapter = new ExpressAdapter()
     compiler = new AssetCompiler(@options.build_compiler_package())
-    testServer = new TestServer(@options, adapter)
+    testServer = new TestServer(@options)
 
     compiler.create_routes(adapter)
     testServer.create_routes(adapter)

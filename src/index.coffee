@@ -3,3 +3,4 @@ module.exports =
   Options: require './options'
   ExpressAdapter: require('./adapters').ExpressAdapter
   AssetServer: require './asset_server'
+  TestServer: require './test_server'
