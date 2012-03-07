@@ -20,6 +20,7 @@ Future support:
 * script tag generation for node servers
 * ability to publish assets to cdn/server
 * configurable "compilers" so you can mix and match templateing engines/css compilers as you please. A base set of compilers (as the current set) will be defined
+* auto browser test runner with single file support using web sockets and a file watcher
 
 Current it only supports express ~2.0.0 but will be updated to support express ~3.0.0 as well as Strata
 
