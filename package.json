@@ -1,7 +1,7 @@
 { 
   "name": "stitch-asset-server", 
   "description": "CommonJS stitcher and asset pipeline.", 
-  "version": "0.1.0", 
+  "version": "0.2.0", 
   "author": "Dan Shultz", 
   "licenses":
     [{ 
