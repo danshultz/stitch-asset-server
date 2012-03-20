@@ -4,8 +4,8 @@ path      = require 'path'
 
 class Options
   constructor: (overrides = null) ->
-    @[key] = value for key, value of overrides
     @[key] = value for key, value of @readSlug()
+    @[key] = value for key, value of overrides
 
   readSlug: (slug = @slug) ->
     return {} unless slug and path.existsSync(slug)
@@ -25,6 +25,7 @@ class Options
   test:         './test'
   testPageTemplate: ''
   testPublic:   './test/public'
+  testLibs:     []
   testPath:     '/test'
   specs:        './test/specs'
   specsPath:    '/test/specs.js'

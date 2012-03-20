@@ -15,12 +15,13 @@ describe "Options", ->
     options = new Options(overrides)
     options[key].should.eql(value) for key, value of overrides
 
-  it "should use the values in the slug file as master options", ->
+  it "should use the values passed to the constructor as presedence over the slug file", ->
     slug_path = './test/tmp/slug.json'
     fs.writeFileSync(resolve(slug_path), format('%j', slug_file_data))
-    options = new Options(slug: slug_path, css: 'nogood', paths: [])
-    options[key].should.eql(value) for key, value of slug_file_data
+    options = new Options(slug: slug_path, css: 'manualyoverridden', paths: [])
     options.slug.should.eql slug_path
+    options.css.should.eql 'manualyoverridden'
+    options.paths.should.eql []
 
   describe "#build_compiler_package", ->
     it "builds with basic options", ->
@@ -68,6 +69,7 @@ describe "Options", ->
     jsPath:       '/application.js'
     test:         './test'
     testPageTemplate: ''
+    testLibs:     []
     testPublic:   './test/public'
     testPath:     '/test'
     specs:        './test/specs'
