@@ -4,7 +4,8 @@ var optimist  = require('optimist')
 var argv = optimist.usage([
   '  usage: asset-server COMMAND',
   '    server  start a dynamic development server',
-  '    build   serialize application to disk'
+  '    build   serialize application to disk',
+  '    watch   watches your files for changes and then rebuilds the sources'
 ].join("\n"))
 .alias('p', 'port')
 .alias('d', 'debug')
@@ -17,6 +18,9 @@ switch(argv._[0]) {
   case "build":
     require('../lib/asset_server').compile(argv.dir, argv.manifest);
     console.log('building assets complete');
+    break;
+  case "watch":
+    require('../lib/asset_server').watch(argv.dir, argv.manifest);
     break;
   default:
     optimist.showHelp()

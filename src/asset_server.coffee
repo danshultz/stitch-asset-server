@@ -11,6 +11,9 @@ class AssetServer
   @compile: (save_dir, manifest_name) ->
     (new @).compile(save_dir, manifest_name)
 
+  @watch: (save_dir, manifest_name) ->
+    (new @).watch(save_dir, manifest_name)
+
   constructor: (options = {}) ->
     @options = new Options(options)
 
@@ -29,5 +32,10 @@ class AssetServer
     #TODO: add save_dir and manifiest_name optionally from slug file
     compiler = new AssetCompiler(@options.build_compiler_package())
     compiler.compile(save_id: save_dir, manifest_name: manifest_name)
+
+  watch: (save_dir, manifest_name) ->
+    compiler = new AssetCompiler(@options.build_compiler_package())
+    compiler.watch(save_id: save_dir, manifest_name: manifest_name)
+
 
 module.exports = AssetServer
