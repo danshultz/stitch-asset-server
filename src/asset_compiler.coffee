@@ -5,6 +5,7 @@ resolve = path.resolve
 {CssBundler} = require './css_bundler'
 {Package} = require './js_packager'
 {md5Namer} = require './file_namer'
+{watch} = require './utils'
 
 class AssetCompiler
   constructor: (packages) ->
@@ -13,6 +14,13 @@ class AssetCompiler
   create_routes: (adapter) ->
     @_create_route_for(@packages.js, adapter, Package)
     @_create_route_for(@packages.css, adapter, CssBundler)
+
+  watch: (options = {}, postBuildCallBack = null) ->
+    @compile(options)
+    watchDirs = for _, dirs of @packages.js
+      dirs.paths.concat(dirs.libs)
+    watchDirs.push(dirs) for _, dirs of @packages.css
+    watch(watchDirs, @_createOnWatchChange(options, postBuildCallBack))
 
   compile: (options = {}) ->
     options = Object.create(options) #instead of just plain extend, no real reason why this is done vs extend
@@ -33,6 +41,14 @@ class AssetCompiler
 
   #private
   
+  _createOnWatchChange: (options, postBuildCallBack) ->
+    compile = => @compile.apply(@, arguments)
+    return (file, curr, prev) =>
+      if curr and (curr.nlink is 0 or +curr.mtime isnt +prev?.mtime)
+        console.log("#{file} changed.  Rebuilding...")
+        compile(options)
+        postBuildCallBack && postBuildCallBack()
+
   _create_route_for: (package_data, adapter, packager) ->
     for file_name, data of package_data
       do (file_name, data) ->
@@ -45,7 +61,9 @@ class AssetCompiler
       file_name = path.basename(file_name)
       file_data = new packager(data).compile(options.minify)
       hashed_file_name = if options.hash_file_names then md5Namer(file_name, file_data) else file_name
-      fs.writeFileSync(path.join(options.save_dir, hashed_file_name), file_data)
+      write_file_path = path.join(options.save_dir, hashed_file_name)
+      fs.writeFileSync(write_file_path, file_data)
+      console.log("file #{write_file_path} written")
       manifest[file_name] = hashed_file_name
 
 

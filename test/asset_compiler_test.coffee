@@ -5,6 +5,10 @@ util = require 'util'
 should = require('should')
 AssetCompiler = require resolve('./src/asset_compiler')
 
+filesShouldMatch = (a, b) ->
+  appjs = fs.readFileSync(resolve(a))
+  appjs.should.eql fs.readFileSync(resolve(b))
+
 describe "AssetCompiler", ->
   package =
     js:
@@ -49,15 +53,13 @@ describe "AssetCompiler", ->
         'application.css': 'application-e0185cba9a838c87a1ba16e9c5cad5de.css'
         'other.css': 'other-7ab6eb3ade352f818cfb17afcb39422d.css'
 
-      appjs = fs.readFileSync(path.join(build_dir, manifest['application.js']))
-      appjs.should.eql fs.readFileSync(resolve('test/fixtures/package/expected_result.min.js'))
+      getPath = (key) ->
+        path.join(build_dir, manifest[key])
 
-      appcss = fs.readFileSync(path.join(build_dir, manifest['application.css']))
-      appcss.should.eql fs.readFileSync(resolve('test/fixtures/css_bundler/expanded.css'))
+      filesShouldMatch(getPath('application.js'), 'test/fixtures/package/expected_result.min.js')
+      filesShouldMatch(getPath('application.css'), 'test/fixtures/css_bundler/expanded.css')
+      filesShouldMatch(getPath('other.css'), 'test/fixtures/css_bundler/c.css')
       
-      othercss = fs.readFileSync(path.join(build_dir, manifest['other.css']))
-      othercss.should.eql fs.readFileSync(resolve('test/fixtures/css_bundler/c.css'))
-
     describe "passing options to not hash file name", ->
       it "should not hash the output files", ->
         compiler.compile(save_dir: build_dir, hash_file_names: false, minify: false)
@@ -69,14 +71,23 @@ describe "AssetCompiler", ->
           'application.css': 'application.css'
           'other.css': 'other.css'
 
-        appjs = fs.readFileSync(path.join(build_dir, manifest['application.js']))
-        appjs.should.eql fs.readFileSync(resolve('test/fixtures/package/expected_result.js'))
+        getPath = (key) ->
+          path.join(build_dir, manifest[key])
 
-        appcss = fs.readFileSync(path.join(build_dir, manifest['application.css']))
-        appcss.should.eql fs.readFileSync(resolve('test/fixtures/css_bundler/expanded.css'))
-        
-        othercss = fs.readFileSync(path.join(build_dir, manifest['other.css']))
-        othercss.should.eql fs.readFileSync(resolve('test/fixtures/css_bundler/c.css'))
+        filesShouldMatch(getPath('application.js'), 'test/fixtures/package/expected_result.js')
+        filesShouldMatch(getPath('application.css'), 'test/fixtures/css_bundler/expanded.css')
+        filesShouldMatch(getPath('other.css'), 'test/fixtures/css_bundler/c.css')
+
+  describe "#watch", ->
+    build_dir = './test/build'
+    fs.mkdir('./test/build')
+    before ->
+      fs.readdirSync(build_dir).forEach (file) ->
+        fs.unlinkSync(path.join(build_dir, file))
+
+    #TODO: Idenify how to write a test against the watcher...may have to use a mock/spy
+    #Pending
+    it "should build the source and rebuild if a file changes"
 
   describe "#create_routes", ->
     for asset_type, asset_package of package
