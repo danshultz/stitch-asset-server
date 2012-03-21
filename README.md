@@ -13,10 +13,10 @@ This tool provides the following:
 * inline code configuration or static config file
 * pre-compiling assets for production with md5 digest
 * in browser testing support for your application (http://0.0.0.0:9294/test) utilizing mocha/chai
+* file watch support and recompiling on file watching
 
 Future support:
 
-* test server integration with mocha/chai via test url (/test will be default)
 * script tag generation for node servers
 * ability to publish assets to cdn/server
 * configurable "compilers" so you can mix and match templateing engines/css compilers as you please. A base set of compilers (as the current set) will be defined
