@@ -1,7 +1,7 @@
 { 
   "name": "stitch-asset-server", 
   "description": "CommonJS stitcher and asset pipeline.", 
-  "version": "0.2.0", 
+  "version": "0.2.1", 
   "author": "Dan Shultz", 
   "licenses":
     [{ 
@@ -12,7 +12,7 @@
     "type" : "git", 
     "url": "http://github.com/danshultz/stitch-asset-server.git"
   }, 
-  "engine" : [ "node >=0.1.102" ], 
+  "engine" : [ "node >=0.6.0" ], 
   "main" : "./lib/index.js",
   "bin": { "asset-server": "./bin/asset-server" },
   "dependencies" : { 
