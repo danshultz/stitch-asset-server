@@ -15,7 +15,7 @@ class Stitch
 
   walk: (path, parent = path, result = []) ->
     return unless npath.existsSync(path)
-    for child in fs.readdirSync(path)
+    for child in fs.readdirSync(path).sort()
       child = npath.join(path, child)
       stat  = fs.statSync(child)
       if stat.isDirectory()
